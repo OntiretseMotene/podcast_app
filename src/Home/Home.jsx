@@ -13,18 +13,12 @@ const Preview = ({ currentShow, setCurrentlyPlaying }) => {
 
 export const Home = ({ shows, setCurrentlyPlaying }) => {
   const { setId, playerContext } = usePlayer();
+  const [, setCurrentUrl] = useLocalStorage("currentUrl", ""); //passsing parameters(key and initialValue) to a function called useLocalStorage
 
-  const [currentShow, setCurrentShow] = useState({});
   const [showPreview, setShowPreview] = useState(false);
-  const getSingleShow = (id) => {
-    fetch(`https://podcast-api.netlify.app/id/${id}`)
-      .then((data) => data.json())
-      .then((show) => {
-        setCurrentShow(show);
-      });
-  };
+
   return (
-    <div>
+    <div className="grid-container">
       {/* {showPreview ? (
         <Preview
           currentShow={currentShow}
@@ -34,12 +28,11 @@ export const Home = ({ shows, setCurrentlyPlaying }) => {
 
       {shows.map((show, index) => (
         <li
+          className="grid-item"
           key={index}
           onClick={() => {
-            getSingleShow(show.id);
             setShowPreview(true);
-            setId(() => show.id);
-            console.log(show.id);
+            setCurrentlyPlaying(show.id);
           }}
         >
           <Card

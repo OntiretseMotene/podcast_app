@@ -1,13 +1,12 @@
-import './App.css'
-import Container from './Container'
+import "./App.css";
+import NowPlaying from "./NowPlaying";
 
 function App() {
-
   return (
     <>
-      <Container />
+      <NowPlaying />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

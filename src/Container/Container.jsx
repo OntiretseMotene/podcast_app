@@ -4,11 +4,23 @@ import NowPlaying from "../NowPlaying";
 import Favourites from "../Favourites";
 import History from "../History";
 
-export const Container = () => {
+export const Container = ({ setCurrentUrl }) => {
   const [shows, setShows] = useState([]);
   const [page, setPage] = useState("home");
   const [currentlyPlaying, setCurrentlyPlaying] = useState("");
-
+  const searchShows = (query) => {
+    const { type, value } = query;
+    if (type === "title") {
+      const filteredShows = shows.filter((show) => {
+        const upperCaseTitle = show.title.toUpperCase();
+        return upperCaseTitle.includes(value.toUpperCase());
+      });
+      setShows(filteredShows);
+    }
+  };
+  const sortShows = () => {
+    //sort shows functionality. get show titles in an array, sort function to list A-Z or Z-A set show to new sorted list
+  };
   useEffect(() => {
     fetch("https://podcast-api.netlify.app/shows")
       .then((data) => data.json())
@@ -22,20 +34,22 @@ export const Container = () => {
   }, []);
 
   const pages = {
-    home: <Home shows={shows} setCurrentlyPlaying={setCurrentlyPlaying} />, //passing the getSigleShows function to home
+    home: <Home shows={shows} setCurrentlyPlaying={setCurrentUrl} />, //passing the getSigleShows function to home
     favourites: <Favourites />,
     history: <History />,
   };
 
   return (
     <>
-      <NowPlaying currentShow={{}}>
-        <button onClick={() => setPage("home")}>Home</button>
-        <button onClick={() => setPage("nowPlaying")}>Now Playing</button>
-        <button onClick={() => setPage("favourites")}>Favourites</button>
-        <button onClick={() => setPage("history")}>History</button>
-        {pages[page]}
-      </NowPlaying>
+      {/* <NowPlaying currentShow={{}}> */}
+      <button onClick={() => setPage("home")}>Home</button>
+      <button onClick={() => searchShows({ type: "title", value: "the" })}>
+        Search
+      </button>
+      <button onClick={() => setPage("favourites")}>Favourites</button>
+      <button onClick={() => setPage("history")}>History</button>
+      {pages[page]}
+      {/* </NowPlaying> */}
     </>
   );
 };
