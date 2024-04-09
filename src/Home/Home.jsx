@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Card } from "../presentation/Card";
 import { usePlayer } from "../hooks/usePlayer";
@@ -17,6 +17,7 @@ export const Home = ({ shows, setCurrentlyPlaying }) => {
 
   const [showPreview, setShowPreview] = useState(false);
 
+  useEffect(() => {}, [shows]);
   return (
     <div className="grid-container">
       {/* {showPreview ? (

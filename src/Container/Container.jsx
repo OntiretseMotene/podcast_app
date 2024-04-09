@@ -8,7 +8,8 @@ export const Container = ({ setCurrentUrl }) => {
   const [shows, setShows] = useState([]);
   const [page, setPage] = useState("home");
   const [currentlyPlaying, setCurrentlyPlaying] = useState("");
-  const searchShows = (query) => {
+
+  const filterShows = (query) => {
     const { type, value } = query;
     if (type === "title") {
       const filteredShows = shows.filter((show) => {
@@ -18,9 +19,32 @@ export const Container = ({ setCurrentUrl }) => {
       setShows(filteredShows);
     }
   };
-  const sortShows = () => {
+
+  const sortShows = (query) => {
     //sort shows functionality. get show titles in an array, sort function to list A-Z or Z-A set show to new sorted list
+    const queryType = {
+      "A-Z": () =>
+        setShows(
+          shows.sort((show1, show2) => (show1.title < show2.title ? 1 : -1))
+        ),
+      "Z-A": () =>
+        setShows(() =>
+          shows
+            .sort((show1, show2) => (show1.title < show2.title ? 1 : -1))
+            .reverse()
+        ),
+      Ascending: () => setShows(shows.map((show) => Date(show.updated)).sort()),
+      Descending: () =>
+        setShows(
+          shows
+            .map((show) => Date(show.updated))
+            .sort()
+            .reverse()
+        ),
+    };
+    queryType[query]();
   };
+
   useEffect(() => {
     fetch("https://podcast-api.netlify.app/shows")
       .then((data) => data.json())
@@ -43,9 +67,7 @@ export const Container = ({ setCurrentUrl }) => {
     <>
       {/* <NowPlaying currentShow={{}}> */}
       <button onClick={() => setPage("home")}>Home</button>
-      <button onClick={() => searchShows({ type: "title", value: "the" })}>
-        Search
-      </button>
+      <button onClick={() => sortShows("A-Z")}>Search</button>
       <button onClick={() => setPage("favourites")}>Favourites</button>
       <button onClick={() => setPage("history")}>History</button>
       {pages[page]}
