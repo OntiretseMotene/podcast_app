@@ -25,18 +25,21 @@ export const Container = ({ setCurrentUrl }) => {
     const queryType = {
       "A-Z": () =>
         setShows(
-          shows.sort((show1, show2) => (show1.title < show2.title ? 1 : -1))
+          [...shows].sort((show1, show2) =>
+            show1.title < show2.title ? 1 : -1
+          )
         ),
       "Z-A": () =>
         setShows(() =>
-          shows
+          [...shows]
             .sort((show1, show2) => (show1.title < show2.title ? 1 : -1))
             .reverse()
         ),
-      Ascending: () => setShows(shows.map((show) => Date(show.updated)).sort()),
+      Ascending: () =>
+        setShows([...shows].map((show) => Date(show.updated)).sort()),
       Descending: () =>
         setShows(
-          shows
+          [...shows]
             .map((show) => Date(show.updated))
             .sort()
             .reverse()

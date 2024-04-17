@@ -1,7 +1,7 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   text-align: center;
+  padding: 0;
 }
 body {
   margin: 0;
@@ -23,6 +23,8 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   justify-items: center;
   padding: 0;
+  max-width: 1280px;
+  margin: auto;
 }
 
 .grid-item {
@@ -73,4 +75,14 @@ body {
 
 .card-description:hover {
   filter: blur(0);
+}
+.show-preview {
+  width: 500px;
+  height: 500px;
+  background: grey;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  z-index: 99;
 }

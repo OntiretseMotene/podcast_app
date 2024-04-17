@@ -8,7 +8,11 @@ const Preview = ({ currentShow, setCurrentlyPlaying }) => {
   const [episode, setEpisode] = useState(1);
   // const url = currentShow.seasons[season].episodes[episode].file;
 
-  return <>{/* <div>{url}</div> */}</>;
+  return (
+    <>
+      <div className="show-preview"></div>
+    </>
+  );
 };
 
 export const Home = ({ shows, setCurrentlyPlaying }) => {
@@ -16,16 +20,17 @@ export const Home = ({ shows, setCurrentlyPlaying }) => {
   const [, setCurrentUrl] = useLocalStorage("currentUrl", ""); //passsing parameters(key and initialValue) to a function called useLocalStorage
 
   const [showPreview, setShowPreview] = useState(false);
+  const [currentShow, setCurrentShow] = useState("");
 
   useEffect(() => {}, [shows]);
   return (
     <div className="grid-container">
-      {/* {showPreview ? (
+      {showPreview ? (
         <Preview
           currentShow={currentShow}
           setCurrentlyPlaying={setCurrentlyPlaying}
         />
-      ) : null} */}
+      ) : null}
 
       {shows.map((show, index) => (
         <li
@@ -33,7 +38,7 @@ export const Home = ({ shows, setCurrentlyPlaying }) => {
           key={index}
           onClick={() => {
             setShowPreview(true);
-            setCurrentlyPlaying(show.id);
+            setCurrentShow(show);
           }}
         >
           <Card
