@@ -3,31 +3,47 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Card } from "../presentation/Card";
 import { usePlayer } from "../hooks/usePlayer";
 
-const Preview = ({ currentShow, setCurrentlyPlaying }) => {
+const Preview = ({ currentShowId, setCurrentlyPlaying }) => {
   const [season, setSeason] = useState(1);
   const [episode, setEpisode] = useState(1);
-  // const url = currentShow.seasons[season].episodes[episode].file;
-
+  const [currentShow, setCurrentShow] = useState();
+  useEffect(() => {
+    fetch(`https://podcast-api.netlify.app/id/${currentShowId}`)
+      .then((data) => data.json())
+      .then((currentShow) => {
+        setCurrentShow(currentShow);
+      });
+  }, []);
   return (
-    <>
-      <div className="show-preview"></div>
-    </>
+    <div className="show-preview">
+      <h1>{currentShow?.title}</h1>
+      <img src={currentShow?.seasons[0].image} width={100} height={100} />
+      <p>{currentShow?.description}</p>
+      <label for="seasons-dropdown">{season}</label>
+      <select
+        name="seasons"
+        id="seasons-dropdown"
+        onChange={(event) => {
+          setSeason(event.target.value);
+        }}
+      >
+        {currentShow?.seasons.map((season, index) => (
+          <option value={index + 1}>{index + 1}</option>
+        ))}
+      </select>
+    </div>
   );
 };
 
 export const Home = ({ shows, setCurrentlyPlaying }) => {
-  const { setId, playerContext } = usePlayer();
-  const [, setCurrentUrl] = useLocalStorage("currentUrl", ""); //passsing parameters(key and initialValue) to a function called useLocalStorage
-
   const [showPreview, setShowPreview] = useState(false);
-  const [currentShow, setCurrentShow] = useState("");
+  const [currentShowId, setCurrentShowId] = useState();
 
-  useEffect(() => {}, [shows]);
   return (
     <div className="grid-container">
       {showPreview ? (
         <Preview
-          currentShow={currentShow}
+          currentShowId={currentShowId}
           setCurrentlyPlaying={setCurrentlyPlaying}
         />
       ) : null}
@@ -37,8 +53,8 @@ export const Home = ({ shows, setCurrentlyPlaying }) => {
           className="grid-item"
           key={index}
           onClick={() => {
+            setCurrentShowId(show.id);
             setShowPreview(true);
-            setCurrentShow(show);
           }}
         >
           <Card
