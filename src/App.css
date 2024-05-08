@@ -70,7 +70,7 @@ body {
 }
 
 .card-description {
-  filter: blur(2px);
+  filter: blur(1px);
 }
 
 .card-description:hover {
@@ -85,4 +85,14 @@ body {
   left: 50%;
   transform: translate(-50%, -60%);
   z-index: 99;
+  overflow-y: scroll;
+  /* style the scroll bar */
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.green-bg {
+  color: green;
 }

@@ -3,10 +3,11 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Card } from "../presentation/Card";
 import { usePlayer } from "../hooks/usePlayer";
 
-const Preview = ({ currentShowId, setCurrentlyPlaying }) => {
+const Preview = ({ currentShowId, setCurrentlyPlaying, setShowPreview }) => {
   const [season, setSeason] = useState(1);
   const [episode, setEpisode] = useState(1);
   const [currentShow, setCurrentShow] = useState();
+  const [favourites, setFavourites] = useLocalStorage("favourites", []);
   useEffect(() => {
     fetch(`https://podcast-api.netlify.app/id/${currentShowId}`)
       .then((data) => data.json())
@@ -17,7 +18,11 @@ const Preview = ({ currentShowId, setCurrentlyPlaying }) => {
   return (
     <div className="show-preview">
       <h1>{currentShow?.title}</h1>
-      <img src={currentShow?.seasons[0].image} width={100} height={100} />
+      <img
+        src={currentShow?.seasons[season - 1].image}
+        width={100}
+        height={100}
+      />
       <p>{currentShow?.description}</p>
       <label for="seasons-dropdown">{season}</label>
       <select
@@ -31,6 +36,48 @@ const Preview = ({ currentShowId, setCurrentlyPlaying }) => {
           <option value={index + 1}>{index + 1}</option>
         ))}
       </select>
+      {currentShow?.seasons[season - 1].episodes.map((episode) => {
+        return (
+          <div>
+            <h3>{episode.title}</h3>
+            <p>{episode.description}</p>
+            <button
+              onClick={() => {
+                setCurrentlyPlaying({
+                  title: episode.title,
+                  image: currentShow?.seasons[season - 1].image,
+                  url: episode.file,
+                });
+                setShowPreview(false);
+              }}
+            >
+              Play
+            </button>
+            {/* The below is the heart/favourites button */}
+            <span
+              onClick={() => {
+                if (favourites.includes(JSON.stringify(episode))) {
+                  const newList = favourites.filter(
+                    (thisEpisode) =>
+                      JSON.stringify(thisEpisode) !== JSON.stringify(episode)
+                  );
+
+                  setFavourites(newList);
+                } else {
+                  setFavourites([...favourites, episode]);
+                }
+              }}
+              className={
+                favourites.includes(episode)
+                  ? "material-symbols-outlined green-bg"
+                  : "material-symbols-outlined"
+              }
+            >
+              favorite
+            </span>
+          </div>
+        );
+      })}
     </div>
   );
 };
@@ -45,6 +92,7 @@ export const Home = ({ shows, setCurrentlyPlaying }) => {
         <Preview
           currentShowId={currentShowId}
           setCurrentlyPlaying={setCurrentlyPlaying}
+          setShowPreview={setShowPreview}
         />
       ) : null}
 
