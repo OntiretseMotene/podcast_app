@@ -56,7 +56,11 @@ const Preview = ({ currentShowId, setCurrentlyPlaying, setShowPreview }) => {
             {/* The below is the heart/favourites button */}
             <span
               onClick={() => {
-                if (favourites.includes(JSON.stringify(episode))) {
+                if (
+                  favourites.find((element) => {
+                    JSON.stringify(element) === JSON.stringify(episode);
+                  })
+                ) {
                   const newList = favourites.filter(
                     (thisEpisode) =>
                       JSON.stringify(thisEpisode) !== JSON.stringify(episode)
