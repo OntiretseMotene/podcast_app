@@ -58,7 +58,7 @@ const Preview = ({ currentShowId, setCurrentlyPlaying, setShowPreview }) => {
               onClick={() => {
                 if (
                   favourites.find((element) => {
-                    JSON.stringify(element) === JSON.stringify(episode);
+                    return JSON.stringify(element) === JSON.stringify(episode);
                   })
                 ) {
                   const newList = favourites.filter(
@@ -68,11 +68,14 @@ const Preview = ({ currentShowId, setCurrentlyPlaying, setShowPreview }) => {
 
                   setFavourites(newList);
                 } else {
+                  // add show that episode belongs to
                   setFavourites([...favourites, episode]);
                 }
               }}
               className={
-                favourites.includes(episode)
+                favourites.find((element) => {
+                  return JSON.stringify(element) === JSON.stringify(episode);
+                })
                   ? "material-symbols-outlined green-bg"
                   : "material-symbols-outlined"
               }
