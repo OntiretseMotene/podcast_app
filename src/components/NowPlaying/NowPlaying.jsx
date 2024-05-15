@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
-import { usePlayer } from "../hooks/usePlayer";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import { usePlayer } from "../../hooks/usePlayer";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 import Container from "../Container/Container";
 
 const Loading = () => {

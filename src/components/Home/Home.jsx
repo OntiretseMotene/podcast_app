@@ -1,7 +1,8 @@
 import { useState, useContext, useEffect } from "react";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { Card } from "../presentation/Card";
-import { usePlayer } from "../hooks/usePlayer";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { Card } from "../../presentation/Card";
+import { usePlayer } from "../../hooks/usePlayer";
+import Filters from "../Filters";
 
 const Preview = ({ currentShowId, setCurrentlyPlaying, setShowPreview }) => {
   const [season, setSeason] = useState(1);

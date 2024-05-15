@@ -3,21 +3,19 @@ import { Home } from "../Home";
 import NowPlaying from "../NowPlaying";
 import Favourites from "../Favourites";
 import History from "../History";
+import Filters from "../Filters";
 
 export const Container = ({ setCurrentUrl }) => {
   const [shows, setShows] = useState([]);
   const [page, setPage] = useState("home");
-  const [currentlyPlaying, setCurrentlyPlaying] = useState("");
+  const [allShows, setAllShows] = useState([]);
 
   const filterShows = (query) => {
-    const { type, value } = query;
-    if (type === "title") {
-      const filteredShows = shows.filter((show) => {
-        const upperCaseTitle = show.title.toUpperCase();
-        return upperCaseTitle.includes(value.toUpperCase());
-      });
-      setShows(filteredShows);
-    }
+    const filteredShows = allShows.filter((show) => {
+      const upperCaseTitle = show.title.toUpperCase();
+      return upperCaseTitle.includes(query.toUpperCase());
+    });
+    setShows(filteredShows);
   };
 
   const sortShows = (query) => {
@@ -35,13 +33,20 @@ export const Container = ({ setCurrentUrl }) => {
             .sort((show1, show2) => (show1.title < show2.title ? 1 : -1))
             .reverse()
         ),
-      Ascending: () =>
-        setShows([...shows].map((show) => Date(show.updated)).sort()),
+      Ascending: () => {
+        setShows(
+          [...shows].sort((show1, show2) =>
+            new Date(show1.updated) > new Date(show2.updated) ? 1 : -1
+          )
+        );
+      },
+
       Descending: () =>
         setShows(
           [...shows]
-            .map((show) => Date(show.updated))
-            .sort()
+            .sort((show1, show2) =>
+              new Date(show1.updated) > new Date(show2.updated) ? 1 : -1
+            )
             .reverse()
         ),
     };
@@ -53,6 +58,7 @@ export const Container = ({ setCurrentUrl }) => {
       .then((data) => data.json())
       .then((allShows) => {
         setShows(allShows);
+        setAllShows(allShows);
         setPage("home");
       })
       .catch((error) => {
@@ -69,6 +75,7 @@ export const Container = ({ setCurrentUrl }) => {
   return (
     <>
       {/* <NowPlaying currentShow={{}}> */}
+      <Filters sortShows={sortShows} filterShows={filterShows} />
       <button onClick={() => setPage("home")}>Home</button>
       <button onClick={() => sortShows("A-Z")}>Search</button>
       <button onClick={() => setPage("favourites")}>Favourites</button>

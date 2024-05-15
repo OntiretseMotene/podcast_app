@@ -69,12 +69,12 @@ body {
   margin: 5px 0;
 }
 
-.card-description {
+/* .card-description {
   filter: blur(1px);
-}
+} */
 
-.card-description:hover {
-  filter: blur(0);
+/* .card-description:hover {
+  filter: blur(0); */
 }
 .show-preview {
   width: 500px;
