@@ -3,6 +3,8 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { Card } from "../../presentation/Card";
 import { usePlayer } from "../../hooks/usePlayer";
 import Filters from "../Filters";
+import { genres } from "../../types/genres";
+import { Carousel } from "../Carousel/Carousel";
 
 const Preview = ({ currentShowId, setCurrentlyPlaying, setShowPreview }) => {
   const [season, setSeason] = useState(1);
@@ -18,6 +20,12 @@ const Preview = ({ currentShowId, setCurrentlyPlaying, setShowPreview }) => {
   }, []);
   return (
     <div className="show-preview">
+      <span
+        className="material-symbols-outlined"
+        onClick={() => setShowPreview(false)}
+      >
+        close
+      </span>
       <h1>{currentShow?.title}</h1>
       <img
         src={currentShow?.seasons[season - 1].image}
@@ -59,23 +67,33 @@ const Preview = ({ currentShowId, setCurrentlyPlaying, setShowPreview }) => {
               onClick={() => {
                 if (
                   favourites.find((element) => {
-                    return JSON.stringify(element) === JSON.stringify(episode);
+                    return (
+                      JSON.stringify(element.episode) ===
+                      JSON.stringify(episode)
+                    );
                   })
                 ) {
                   const newList = favourites.filter(
                     (thisEpisode) =>
-                      JSON.stringify(thisEpisode) !== JSON.stringify(episode)
+                      JSON.stringify(thisEpisode.episode) !==
+                      JSON.stringify(episode)
                   );
 
                   setFavourites(newList);
                 } else {
                   // add show that episode belongs to
-                  setFavourites([...favourites, episode]);
+                  const date = new Date();
+                  setFavourites([
+                    ...favourites,
+                    { episode, currentShow, date, season },
+                  ]);
                 }
               }}
               className={
                 favourites.find((element) => {
-                  return JSON.stringify(element) === JSON.stringify(episode);
+                  return (
+                    JSON.stringify(element.episode) === JSON.stringify(episode)
+                  );
                 })
                   ? "material-symbols-outlined green-bg"
                   : "material-symbols-outlined"
@@ -96,6 +114,7 @@ export const Home = ({ shows, setCurrentlyPlaying }) => {
 
   return (
     <div className="grid-container">
+      <Carousel allShows={shows} />
       {showPreview ? (
         <Preview
           currentShowId={currentShowId}
@@ -104,26 +123,29 @@ export const Home = ({ shows, setCurrentlyPlaying }) => {
         />
       ) : null}
 
-      {shows.map((show, index) => (
-        <li
-          className="grid-item"
-          key={index}
-          onClick={() => {
-            setCurrentShowId(show.id);
-            setShowPreview(true);
-          }}
-        >
-          <Card
-            cardImage={show.image}
-            title={show.title}
-            description={show.description}
-            showid={show.id}
-            genre={show.genres}
-            seasons={show.seasons}
-            date={show.updated}
-          />
-        </li>
-      ))}
+      {shows.map((show, index) => {
+        const Data = (
+          <>
+            <p className="show-data">
+              {show.genres.map((genre) => genres[genre]).join(", ")}
+            </p>
+            <p className="show-data">Seasons:{show.seasons}</p>
+          </>
+        );
+
+        return (
+          <div
+            className="grid-item"
+            key={index}
+            onClick={() => {
+              setCurrentShowId(show.id);
+              setShowPreview(true);
+            }}
+          >
+            <Card cardImage={show.image} title={show.title} data={Data} />
+          </div>
+        );
+      })}
     </div>
   );
 };

@@ -11,11 +11,19 @@ export const Container = ({ setCurrentUrl }) => {
   const [allShows, setAllShows] = useState([]);
 
   const filterShows = (query) => {
-    const filteredShows = allShows.filter((show) => {
-      const upperCaseTitle = show.title.toUpperCase();
-      return upperCaseTitle.includes(query.toUpperCase());
-    });
-    setShows(filteredShows);
+    if (!query) return setShows(allShows);
+    if (isNaN(query)) {
+      const filteredShows = allShows.filter((show) => {
+        const upperCaseTitle = show.title.toUpperCase();
+        return upperCaseTitle.includes(query.toUpperCase());
+      });
+      setShows(filteredShows);
+    } else {
+      const filteredShows = allShows.filter((show) => {
+        return show.genres.includes(query);
+      });
+      setShows(filteredShows);
+    }
   };
 
   const sortShows = (query) => {
@@ -24,14 +32,14 @@ export const Container = ({ setCurrentUrl }) => {
       "A-Z": () =>
         setShows(
           [...shows].sort((show1, show2) =>
-            show1.title < show2.title ? 1 : -1
+            show1.title > show2.title ? 1 : -1
           )
         ),
       "Z-A": () =>
         setShows(() =>
-          [...shows]
-            .sort((show1, show2) => (show1.title < show2.title ? 1 : -1))
-            .reverse()
+          [...shows].sort((show1, show2) =>
+            show1.title < show2.title ? 1 : -1
+          )
         ),
       Ascending: () => {
         setShows(

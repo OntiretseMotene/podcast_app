@@ -34,7 +34,8 @@ body {
 
 .card {
   padding: 20px;
-  max-height: 350px;
+  height: 320px;
+  cursor: pointer;
 }
 
 .shows {
@@ -57,7 +58,7 @@ body {
 }
 
 .card-title {
-  font-weight: 200;
+  font-weight: 500;
 }
 
 .Show-content h2 {
@@ -75,7 +76,7 @@ body {
 
 /* .card-description:hover {
   filter: blur(0); */
-}
+
 .show-preview {
   width: 500px;
   height: 500px;
@@ -91,8 +92,13 @@ body {
 
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  cursor: pointer;
 }
 
 .green-bg {
   color: green;
+}
+
+.show-data {
+  font-size: 0.8rem;
 }
