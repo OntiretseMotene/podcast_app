@@ -114,7 +114,7 @@ export const Home = ({ shows, setCurrentlyPlaying }) => {
 
   return (
     <div className="grid-container">
-      <Carousel allShows={shows} />
+      {shows.length > 0 ? <Carousel allShows={shows} /> : null}
       {showPreview ? (
         <Preview
           currentShowId={currentShowId}

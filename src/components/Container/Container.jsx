@@ -83,6 +83,7 @@ export const Container = ({ setCurrentUrl }) => {
   return (
     <>
       {/* <NowPlaying currentShow={{}}> */}
+
       <Filters sortShows={sortShows} filterShows={filterShows} />
       <button onClick={() => setPage("home")}>Home</button>
       <button onClick={() => sortShows("A-Z")}>Search</button>

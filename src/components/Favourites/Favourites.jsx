@@ -4,21 +4,22 @@ import { Card } from "../../presentation/Card";
 
 export const Favourites = ({ allShows }) => {
   const [favourites, setFavourtes] = useLocalStorage("favourites");
-
-  const filterFavourites = (allShows) => {};
-  return (
+  //add shows to the Favourites
+  const sortedFavourites = () => {
+    return [...favourites].reduce((acc, current) => {
+      console.log(acc);
+      acc[current] = acc[current]? acc[current].push
+      return { ...acc, current: [current? current.currentShow] };
+    }, {});
+  };
+  const sorted = sortedFavourites();
+  const keys = Object.keys(sorted);
+  return ( 
     <div>
-      {favourites.map((episode) => {
-        console.log(episode.date);
-        return (
-          <Card
-            cardImage={episode.currentShow.image}
-            showid={episode.currentShow.id}
-            description={episode.episode.description}
-            genre={episode.episode.genres}
-            date={episode.date}
-          />
-        );
+      {keys.map((key) => {
+        sorted[key].map((episode) => (
+          <Card cardImage={episode.currentShow.image} title={episode.title} />
+        ));
       })}
     </div>
   );
