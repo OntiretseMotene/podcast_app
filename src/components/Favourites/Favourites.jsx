@@ -22,8 +22,16 @@ export const Favourites = ({ allShows }) => {
     acc.push(JSON.stringify(current.currentShow)) 
     return acc
   }, [])
-  console.log(uniqueShows)
+  
 
+  const sortedShows = uniqueShows.map((show) => {
+    const filteredEpisodes = favourites.filter((episode)=> JSON.stringify(episode.currentShow)===show)
+    const sortedEpisodes = filteredEpisodes.sort((a, b)=> a.season > b.season ? 1 : -1)
+    return sortedEpisodes
+  }
+  
+  )
+  console.log(sortedShows[0])
   // const sortedFavourites = () => {
   // };
 
@@ -36,10 +44,13 @@ export const Favourites = ({ allShows }) => {
   
   return (
     <div>
-        {favourites.map((episode) => (
-          <Card cardImage={episode.currentShow.image} title={episode.title} data={<CardData />}/>
-        ))
+        { uniqueShows.map((shows, i)=>{return (<>
+        <h2>{JSON.parse(shows).title}</h2>
+        {sortedShows[i].map((episode)=>{return <><p>{episode.episode.title}</p>
+        <p>{episode.season}</p></>})}
+        </>)})
       }
     </div>
   );
 };
+{/* <Card cardImage={episode.currentShow.image} title={episode.title} data={<CardData />}/> */}
