@@ -99,7 +99,7 @@ const Preview = ({ currentShowId, setCurrentlyPlaying, setShowPreview }) => {
                   : "material-symbols-outlined"
               }
             >
-              favorite
+              Heart
             </span>
           </div>
         );
