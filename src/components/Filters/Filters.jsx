@@ -7,7 +7,7 @@ export const Filters = ({ sortShows, filterShows }) => {
         id="title-filter"
         name="title-filter"
         onChange={(element) => {
-          console.log(element.target.value);
+          
           filterShows(element.target.value);
         }}
       ></input>

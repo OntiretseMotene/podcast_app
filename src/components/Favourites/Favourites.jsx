@@ -4,10 +4,9 @@ import { Card } from "../../presentation/Card";
 
 
 
-export const CardData = ({ show, season }) => {
+export const CardData = ({ season }) => {
   return (
     <>
-    <p>{show}</p>
     <p>{season}</p>
     </>
   )
@@ -31,7 +30,7 @@ export const Favourites = ({ allShows }) => {
   }
   
   )
-  console.log(sortedShows[0])
+
   // const sortedFavourites = () => {
   // };
 
@@ -44,13 +43,19 @@ export const Favourites = ({ allShows }) => {
   
   return (
     <div>
-        { uniqueShows.map((shows, i)=>{return (<>
-        <h2>{JSON.parse(shows).title}</h2>
-        {sortedShows[i].map((episode)=>{return <><p>{episode.episode.title}</p>
-        <p>{episode.season}</p></>})}
-        </>)})
-      }
+        { uniqueShows.map((shows, i)=>
+          {
+            return (
+            <div >
+              <h2>{JSON.parse(shows).title}</h2>
+              <div style={{display:"flex"}}>{sortedShows[i].map((episode)=>
+                {
+                  return <Card cardImage={episode.currentShow.image} title={episode.episode.title} data={<CardData  season={episode.season}/>}/>}
+            
+            )}</div></div>)
+        })}
     </div>
   );
 };
 {/* <Card cardImage={episode.currentShow.image} title={episode.title} data={<CardData />}/> */}
+

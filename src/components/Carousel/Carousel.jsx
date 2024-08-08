@@ -7,7 +7,7 @@ export const Carousel = ({ allShows }) => {
 
     const displayedShows = list.map(() => {
       const randomShow = Math.random() * allShows.length + 1;
-      console.log(randomShow);
+      
       return allShows[Math.floor(randomShow)];
     });
     return displayedShows;
@@ -19,7 +19,7 @@ export const Carousel = ({ allShows }) => {
     setDisplayedShows(shows);
   }, []);
   return (
-    <div>
+    <div style={{}}>
       {displayedShows?.map((show) => (
         <Card cardImage={show.image} title={show.title} />
       ))}
