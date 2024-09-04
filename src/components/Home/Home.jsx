@@ -113,8 +113,9 @@ export const Home = ({ shows, setCurrentlyPlaying }) => {
   const [currentShowId, setCurrentShowId] = useState();
 
   return (
-    <div className="grid-container">
+    <div >
       {shows.length > 0 ? <Carousel allShows={shows} /> : null}
+      <div className="grid-container">
       {showPreview ? (
         <Preview
           currentShowId={currentShowId}
@@ -146,6 +147,9 @@ export const Home = ({ shows, setCurrentlyPlaying }) => {
           </div>
         );
       })}
+      </div>
+      
+      
     </div>
   );
 };

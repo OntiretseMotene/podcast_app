@@ -1,7 +1,7 @@
 import { genres } from "../../types/genres";
 export const Filters = ({ sortShows, filterShows }) => {
   return (
-    <div>
+    <div >
       <input
         type="text"
         id="title-filter"
@@ -11,29 +11,29 @@ export const Filters = ({ sortShows, filterShows }) => {
           filterShows(element.target.value);
         }}
       ></input>
-      <div>
-        <button
+      <div >
+        <button className="filter-buttons"
           onClick={() => {
             sortShows("A-Z");
           }}
         >
           A-Z
         </button>
-        <button
+        <button className="filter-buttons"
           onClick={() => {
             sortShows("Z-A");
           }}
         >
           Z-A
         </button>
-        <button
+        <button className="filter-buttons"
           onClick={() => {
             sortShows("Ascending");
           }}
         >
           Ascending
         </button>
-        <button
+        <button className="filter-buttons"
           onClick={() => {
             sortShows("Descending");
           }}
@@ -42,63 +42,63 @@ export const Filters = ({ sortShows, filterShows }) => {
         </button>
       </div>
       <div>
-        <button
+        <button className="filter-buttons"
           onClick={() => {
             filterShows(1);
           }}
         >
           {genres[1]}
         </button>
-        <button
+        <button className="filter-buttons"
           onClick={() => {
             filterShows(2);
           }}
         >
           {genres[2]}
         </button>
-        <button
+        <button className="filter-buttons"
           onClick={() => {
             filterShows(3);
           }}
         >
           {genres[3]}
         </button>
-        <button
+        <button className="filter-buttons"
           onClick={() => {
             filterShows(4);
           }}
         >
           {genres[4]}
         </button>
-        <button
+        <button className="filter-buttons"
           onClick={() => {
             filterShows(5);
           }}
         >
           {genres[5]}
         </button>
-        <button
+        <button className="filter-buttons"
           onClick={() => {
             filterShows(6);
           }}
         >
           {genres[6]}
         </button>
-        <button
+        <button className="filter-buttons"
           onClick={() => {
             filterShows(7);
           }}
         >
           {genres[7]}
         </button>
-        <button
+        <button className="filter-buttons"
           onClick={() => {
             filterShows(8);
           }}
         >
           {genres[8]}
         </button>
-        <button
+        <button className="filter-buttons"
           onClick={() => {
             filterShows(9);
           }}

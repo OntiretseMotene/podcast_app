@@ -1,0 +1,10 @@
+.carousel-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  padding: 16px;
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+}

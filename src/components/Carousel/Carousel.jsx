@@ -14,12 +14,12 @@ export const Carousel = ({ allShows }) => {
   };
   const [displayedShows, setDisplayedShows] = useState();
   useEffect(() => {
-    const shows = getDisplayedShows(3);
+    const shows = getDisplayedShows(4);
 
     setDisplayedShows(shows);
   }, []);
   return (
-    <div style={{}}>
+    <div className="carousel-container">
       {displayedShows?.map((show) => (
         <Card cardImage={show.image} title={show.title} />
       ))}
