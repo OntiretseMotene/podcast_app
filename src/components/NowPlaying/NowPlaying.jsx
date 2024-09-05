@@ -13,15 +13,15 @@ const MediaPlayerContent = ({ currentShow }) => {
   const title = currentShow.title
 
  useEffect(()=> {
-  
-  return ()=> {
-    const showProgress = {}
+  const showProgress = {}
+    console.log (audioRef.current.currentTime)
     showProgress[currentShow.title] = audioRef.current.currentTime
 
     const listeningHistory = JSON.parse(localStorage.getItem("listeningProgress"))||{}
     
-    localStorage.setItem("listeningProgress", JSON.stringify({...listeningHistory, ...showProgress}))}
- }, [currentShow])
+    localStorage.setItem("listeningProgress", JSON.stringify({...listeningHistory, ...showProgress}))
+  
+ }, [audioRef.current?.paused])
   return (
     <>
       <img src={currentShow?.image} width={50} height={50} />
@@ -29,7 +29,8 @@ const MediaPlayerContent = ({ currentShow }) => {
       <audio controls preload="none" key={currentShow?.title} ref={audioRef}>
         <source src={currentShow?.url} type="audio/mpeg"></source>
       </audio>
-      <button onClick={()=> {console.log(audioRef.current?.currentTime)}}></button>
+      <p>{audioRef.current?.paused}</p>
+      <button onClick={()=> {audioRef.current?.play()}}></button>
     </>
   );
 };
