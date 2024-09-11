@@ -92,7 +92,6 @@ body {
 }
 
 .filter-buttons {
-  
   transform: scale(1);
   box-shadow: 0px 4px 8px rgba(145, 17, 17, 0.2); /* Subtle shadow by default */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
@@ -127,3 +126,10 @@ body {
   flex: 0 0 auto;
 }
 
+.media-player {
+  display: flex;
+  overflow-x: auto;
+  padding: 16px;
+
+  gap: 16px;
+}
