@@ -13,22 +13,12 @@ const Loading = () => {
 };
 
 const MediaPlayerContent = ({ currentShow }) => {
+  const [src, setSrc] = useState("");
   const title = currentShow.title;
   console.log(currentShow);
-  useEffect(() => {
-    const showProgress = {};
 
-    const listeningHistory =
-      JSON.parse(localStorage.getItem("listeningProgress")) || {};
-
-    localStorage.setItem(
-      "listeningProgress",
-      JSON.stringify({ ...listeningHistory, ...showProgress })
-    );
-  }, []);
-  let src = "";
   setInterval(() => {
-    src = currentShow?.url;
+    setSrc(currentShow?.url);
   }, 100);
   return (
     <div className="media-player">
@@ -46,7 +36,12 @@ const MediaPlayerContent = ({ currentShow }) => {
         controls
         listenInterval={1000}
         onListen={() => {
-          console.log(audioRef.audioEl.current);
+          localStorage.setItem(
+            "listening-history",
+            JSON.stringify({
+              title: audioRef.audioEl.current.currentTime,
+            })
+          );
         }}
         onLoadedMetadata={() => {
           console.log("metaData");
