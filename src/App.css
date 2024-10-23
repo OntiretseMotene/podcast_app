@@ -79,7 +79,7 @@ body {
   filter: blur(0); */
 
 .show-preview {
-  width: 500px;
+  width: fit-content;
   height: 500px;
   background: grey;
   position: fixed;
@@ -88,9 +88,14 @@ body {
   transform: translate(-50%, -60%);
   z-index: 99;
   overflow-y: scroll;
+  padding: 16px;
   /* style the scroll bar */
 }
 
+.close-button {
+  position: sticky;
+  top: 0;
+}
 .filter-buttons {
   transform: scale(1);
   box-shadow: 0px 4px 8px rgba(145, 17, 17, 0.2); /* Subtle shadow by default */

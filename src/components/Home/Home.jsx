@@ -21,7 +21,7 @@ const Preview = ({ currentShowId, setCurrentlyPlaying, setShowPreview }) => {
   return (
     <div className="show-preview">
       <span
-        className="material-symbols-outlined"
+        className="material-symbols-outlined close-button"
         onClick={() => setShowPreview(false)}
       >
         close
@@ -45,7 +45,10 @@ const Preview = ({ currentShowId, setCurrentlyPlaying, setShowPreview }) => {
           <option value={index + 1}>{index + 1}</option>
         ))}
       </select>
-      {currentShow?.seasons[season - 1].episodes.map((episode) => {
+      <p>
+        Number of Episodes:{currentShow?.seasons[season - 1].episodes.length}
+      </p>
+      {currentShow?.seasons[season - 1].episodes.reverse().map((episode) => {
         return (
           <div>
             <h3>{episode.title}</h3>
@@ -112,44 +115,44 @@ export const Home = ({ shows, setCurrentlyPlaying }) => {
   const [showPreview, setShowPreview] = useState(false);
   const [currentShowId, setCurrentShowId] = useState();
 
+  if (shows.length === 0) return <h1>Loading...</h1>;
   return (
-    <div >
+    <div>
       {shows.length > 0 ? <Carousel allShows={shows} /> : null}
       <div className="grid-container">
-      {showPreview ? (
-        <Preview
-          currentShowId={currentShowId}
-          setCurrentlyPlaying={setCurrentlyPlaying}
-          setShowPreview={setShowPreview}
-        />
-      ) : null}
+        {showPreview ? (
+          <Preview
+            currentShowId={currentShowId}
+            setCurrentlyPlaying={setCurrentlyPlaying}
+            setShowPreview={setShowPreview}
+          />
+        ) : null}
 
-      {shows.map((show, index) => {
-        const Data = (
-          <>
-            <p className="show-data">
-              {show.genres.map((genre) => genres[genre]).join(", ")}
-            </p>
-            <p className="show-data">Seasons:{show.seasons}</p>
-          </>
-        );
+        {shows.map((show, index) => {
+          const Data = (
+            <>
+              <p className="show-data">
+                {show.genres.map((genre) => genres[genre]).join(", ")}
+              </p>
+              <p className="show-data">Seasons:{show.seasons}</p>
+              <p className="show-data">Last Updated:{show.updated}</p>
+            </>
+          );
 
-        return (
-          <div
-            className="grid-item"
-            key={index}
-            onClick={() => {
-              setCurrentShowId(show.id);
-              setShowPreview(true);
-            }}
-          >
-            <Card cardImage={show.image} title={show.title} data={Data} />
-          </div>
-        );
-      })}
+          return (
+            <div
+              className="grid-item"
+              key={index}
+              onClick={() => {
+                setCurrentShowId(show.id);
+                setShowPreview(true);
+              }}
+            >
+              <Card cardImage={show.image} title={show.title} data={Data} />
+            </div>
+          );
+        })}
       </div>
-      
-      
     </div>
   );
 };
