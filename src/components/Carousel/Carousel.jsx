@@ -7,14 +7,14 @@ export const Carousel = ({ allShows }) => {
 
     const displayedShows = list.map(() => {
       const randomShow = Math.random() * allShows.length + 1;
-      
+
       return allShows[Math.floor(randomShow)];
     });
     return displayedShows;
   };
   const [displayedShows, setDisplayedShows] = useState();
   useEffect(() => {
-    const shows = getDisplayedShows(4);
+    const shows = getDisplayedShows(12);
 
     setDisplayedShows(shows);
   }, []);
