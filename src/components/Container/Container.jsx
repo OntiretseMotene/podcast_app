@@ -75,22 +75,19 @@ export const Container = ({ setCurrentUrl }) => {
   }, []);
 
   const pages = {
-    home: <Home shows={shows} setCurrentlyPlaying={setCurrentUrl} />, //passing the getSigleShows function to home
+    home: <Home shows={shows} setCurrentlyPlaying={setCurrentUrl} />,
     favourites: <Favourites />,
     history: <History />,
   };
 
   return (
     <>
-      {/* <NowPlaying currentShow={{}}> */}
-
       <Filters sortShows={sortShows} filterShows={filterShows} />
       <button onClick={() => setPage("home")}>Home</button>
       <button onClick={() => sortShows("A-Z")}>Search</button>
       <button onClick={() => setPage("favourites")}>Favourites</button>
       <button onClick={() => setPage("history")}>History</button>
       {pages[page]}
-      {/* </NowPlaying> */}
     </>
   );
 };
